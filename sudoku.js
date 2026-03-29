@@ -1,6 +1,7 @@
 // 全局变量
 let board = document.getElementById('sudokuBoard');
 let timerEl = document.getElementById('timer');
+let difficultySelect = document.getElementById('difficulty');
 let selectedCell = null;
 let sudokuData = [];
 let answerData = [];
@@ -42,9 +43,16 @@ function toggleMode(mode) {
     stopTimer();
 }
 
-// 生成新数独游戏
+// 生成新数独游戏（根据难度）
 function newGame() {
-    [sudokuData, answerData] = generateSudoku();
+    const difficulty = difficultySelect.value;
+    let emptyCells = 45; // 默认简单模式挖空数
+    if (difficulty === 'medium') {
+        emptyCells = 55; // 中等模式挖空更多
+    } else if (difficulty === 'hard') {
+        emptyCells = 60; // 困难模式挖空最多
+    }
+    [sudokuData, answerData] = generateSudoku(emptyCells);
     renderBoard();
     resetTimer();
     startTimer();
@@ -174,16 +182,20 @@ function formatTime(s) {
     return `${m}:${sec}`;
 }
 
-// 生成数独（简单算法）
-function generateSudoku() {
+// 生成数独（根据难度挖空）
+function generateSudoku(emptyCells) {
     const ans = Array(9).fill().map(() => Array(9).fill(0));
     fillSudoku(ans);
     const puzzle = JSON.parse(JSON.stringify(ans));
-    // 挖空（简单难度）
-    for (let i=0; i<45; i++) {
+    // 根据传入的挖空数量来生成谜题
+    let count = 0;
+    while (count < emptyCells) {
         const r = Math.floor(Math.random()*9);
         const c = Math.floor(Math.random()*9);
-        puzzle[r][c] = 0;
+        if (puzzle[r][c] !== 0) {
+            puzzle[r][c] = 0;
+            count++;
+        }
     }
     return [puzzle, ans];
 }
@@ -229,7 +241,7 @@ function generatePrint() {
     area.className = `print-area ${count===1?'single':count===2?'double':'quad'}`;
     area.innerHTML = '';
     for (let i=0; i<count; i++) {
-        const [puzzle] = generateSudoku();
+        const [puzzle] = generateSudoku(50); // 打印模式使用中等难度的挖空数
         const printSudoku = document.createElement('div');
         printSudoku.className = 'print-sudoku';
         puzzle.forEach(row => {

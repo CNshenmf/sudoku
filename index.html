@@ -17,7 +17,15 @@
     <div id="gameMode" class="mode active">
         <div class="game-header">
             <h1>数独 Sudoku</h1>
-            <div class="info">难度：简单   类型：9x9</div>
+            <div class="info">
+                <label>难度：</label>
+                <select id="difficulty">
+                    <option value="easy">简单</option>
+                    <option value="medium">中等</option>
+                    <option value="hard">困难</option>
+                </select>
+                <span>类型：9x9</span>
+            </div>
             <div class="controls">
                 <button id="newGame">新游戏</button>
                 <button id="check">校验</button>
