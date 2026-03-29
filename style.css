@@ -1,0 +1,201 @@
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f6f7fb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* 模式切换 */
+.mode-switch {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+.mode-switch button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #e0e0e0;
+    font-size: 16px;
+    cursor: pointer;
+}
+.mode-switch button.active {
+    background: #2196F3;
+    color: white;
+}
+
+/* 通用模式隐藏 */
+.mode {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.mode.active {
+    display: flex;
+}
+
+/* 游戏模式样式 */
+.game-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.game-header h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.controls button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 6px;
+    background: #2196F3;
+    color: white;
+    cursor: pointer;
+}
+#timer {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* 数独棋盘 - 核心正方形+粗宫格线 */
+.sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    background: white;
+    border: 2px solid black;
+    /* 响应式适配 */
+    width: 90vw;
+}
+.cell {
+    aspect-ratio: 1/1; /* 强制正方形 */
+    border: 1px solid #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+/* 宫格粗线 */
+.cell:nth-child(3n) {border-right: 2px solid black;}
+.cell:nth-child(9n+1) {border-left: 2px solid black;}
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {border-bottom: 2px solid black;}
+
+/* 颜色规范 */
+.cell.given {color: #333; font-weight: bold;} /* 题目数字-深灰 */
+.cell.user {color: #2196F3;} /* 玩家输入-蓝 */
+.cell.error {color: #f44336;} /* 错误数字-红 */
+.cell.selected {background-color: #e3f2fd;} /* 选中-浅蓝 */
+.cell.highlight {background-color: #f1f1f1;} /* 同行列宫-浅灰 */
+
+/* 数字键盘 */
+.num-keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    width: 90vw;
+}
+.num-keypad button {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #2196F3;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+#delete {background: #666;}
+
+/* 打印模式 */
+.print-header {text-align: center; margin-bottom: 20px;}
+.print-controls {margin-top: 10px; display: flex; gap: 10px; align-items: center;}
+.print-controls select {padding: 8px; border-radius: 6px;}
+.print-controls button {padding: 8px 15px; background: #2196F3; color: white; border: none; border-radius: 6px; cursor: pointer;}
+
+/* 打印区域 - A4排版 */
+.print-area {
+    width: 210mm;
+    background: white;
+    padding: 20mm;
+    display: grid;
+    gap: 10mm;
+}
+.print-area.single {grid-template-columns: 1fr;}
+.print-area.double {grid-template-columns: 1fr;}
+.print-area.quad {grid-template-columns: 1fr 1fr;}
+.print-sudoku {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border: 2px solid black;
+    width: 80mm;
+    margin: 0 auto;
+}
+.print-cell {
+    aspect-ratio: 1/1;
+    border: 1px solid #999;
+}
+.print-cell:nth-child(3n) {border-right: 2px solid black;}
+.print-cell:nth-child(9n+1) {border-left: 2px solid black;}
+.print-cell:nth-child(n+19):nth-child(-n+27),
+.print-cell:nth-child(n+46):nth-child(-n+54) {border-bottom: 2px solid black;}
+
+/* 弹窗 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+.modal-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* 响应式适配（严格按文档） */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sudoku-board, .num-keypad {width: 500px;}
+}
+@media (min-width: 1025px) {
+    .sudoku-board, .num-keypad {width: 520px;}
+}
+
+/* 打印专用样式 */
+@media print {
+    body * {visibility: hidden;}
+    .print-area, .print-area * {visibility: visible;}
+    .print-area {position: absolute; top: 0; left: 0;}
+}

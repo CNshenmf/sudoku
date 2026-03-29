@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童数独</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 模式切换 -->
+    <div class="mode-switch">
+        <button id="gameModeBtn" class="active">游戏模式</button>
+        <button id="printModeBtn">打印模式</button>
+    </div>
+
+    <!-- 游戏模式 -->
+    <div id="gameMode" class="mode active">
+        <div class="game-header">
+            <h1>数独 Sudoku</h1>
+            <div class="info">难度：简单   类型：9x9</div>
+            <div class="controls">
+                <button id="newGame">新游戏</button>
+                <button id="check">校验</button>
+                <button id="showAnswer">答案</button>
+            </div>
+            <div id="timer">00:00</div>
+        </div>
+        <!-- 数独棋盘 -->
+        <div id="sudokuBoard" class="sudoku-board"></div>
+        <!-- 数字键盘 -->
+        <div class="num-keypad">
+            <button data-num="1">1</button>
+            <button data-num="2">2</button>
+            <button data-num="3">3</button>
+            <button data-num="4">4</button>
+            <button data-num="5">5</button>
+            <button data-num="6">6</button>
+            <button data-num="7">7</button>
+            <button data-num="8">8</button>
+            <button data-num="9">9</button>
+            <button id="delete">⌫</button>
+        </div>
+    </div>
+
+    <!-- 打印模式 -->
+    <div id="printMode" class="mode">
+        <div class="print-header">
+            <h1>打印模式</h1>
+            <div class="info">规格：9x9</div>
+            <div class="print-controls">
+                <label>一页：</label>
+                <select id="printCount">
+                    <option value="1">1题</option>
+                    <option value="2">2题</option>
+                    <option value="4">4题</option>
+                </select>
+                <button id="generatePrint">生成打印</button>
+            </div>
+        </div>
+        <div id="printArea" class="print-area"></div>
+    </div>
+
+    <!-- 完成提示弹窗 -->
+    <div id="completeModal" class="modal">
+        <div class="modal-content">
+            <h2>🎉 完成！</h2>
+            <p id="completeTime">用时 00:00</p>
+            <button id="closeModal">确定</button>
+        </div>
+    </div>
+
+    <script src="sudoku.js"></script>
+</body>
+</html>
