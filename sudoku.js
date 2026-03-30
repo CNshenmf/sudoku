@@ -234,13 +234,12 @@ function shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
 }
 
-// 生成打印题目
+// 生成打印题目（固定一页6题）
 function generatePrint() {
-    const count = parseInt(document.getElementById('printCount').value);
     const area = document.getElementById('printArea');
-    area.className = `print-area ${count===1?'single':count===2?'double':'quad'}`;
     area.innerHTML = '';
-    for (let i=0; i<count; i++) {
+    // 循环生成6道题
+    for (let i=0; i<6; i++) {
         const [puzzle] = generateSudoku(50); // 打印模式使用中等难度的挖空数
         const printSudoku = document.createElement('div');
         printSudoku.className = 'print-sudoku';

@@ -135,35 +135,32 @@ body {
 /* 打印模式 */
 .print-header {text-align: center; margin-bottom: 20px;}
 .print-controls {margin-top: 10px; display: flex; gap: 10px; align-items: center;}
-.print-controls select {padding: 8px; border-radius: 6px;}
 .print-controls button {padding: 8px 15px; background: #2196F3; color: white; border: none; border-radius: 6px; cursor: pointer;}
 
-/* 打印区域 - A4排版 */
+/* 打印区域 - A4排版 (一页6题：2列 x 3行) */
 .print-area {
     width: 210mm;
     background: white;
-    padding: 20mm;
+    padding: 15mm;
     display: grid;
-    gap: 10mm;
+    grid-template-columns: 1fr 1fr; /* 2列 */
+    gap: 8mm; /* 题与题之间的间距 */
 }
-.print-area.single {grid-template-columns: 1fr;}
-.print-area.double {grid-template-columns: 1fr;}
-.print-area.quad {grid-template-columns: 1fr 1fr;}
 .print-sudoku {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     border: 2px solid black;
-    width: 80mm;
+    width: 70mm; /* 缩小尺寸以适应6题 */
     margin: 0 auto;
 }
 .print-cell {
     aspect-ratio: 1/1;
     border: 1px solid #999;
-    /* 新增：打印模式数字居中 */
+    /* 打印模式数字居中 */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 11px; /* 字体略微缩小 */
 }
 .print-cell:nth-child(3n) {border-right: 2px solid black;}
 .print-cell:nth-child(9n+1) {border-left: 2px solid black;}
